@@ -5,15 +5,18 @@
  * @modify date 2017-06-07 05:40:17
  * @desc [ first step webpack ]
 */
-import _ from 'lodash';
+import _ from 'lodash'
+import $ from 'jquery'
 
 function component () {
-  var element = document.createElement('div')
+  var element = $('<div></div>')
 
   /* lodash is required for the next line to work */
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ')
 
-  return element
+  element.html(_.join(['Hello', 'webpack'], ' '))
+
+  return element.get(0)
 }
 
 document.body.appendChild(component())
+
