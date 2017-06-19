@@ -2,7 +2,7 @@
   "name": "react-graduation-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://starlikerain.github.io/react-graduation-project/",
+  "homepage": "https://starlikerain.github.io/react-graduation-project/build",
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
