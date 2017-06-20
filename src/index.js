@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
-import Welcome from './Welcome' // Welcome component
+// import Welcome from './Welcome'
 
 // ReactDOM.render(
 //   <Welcome name="123"/>,
