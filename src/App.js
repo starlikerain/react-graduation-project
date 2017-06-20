@@ -1,22 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import TodoInput from './TodoInput'
+import TodoItem from './TodoItem'
 
 class App extends Component {
-  render() {
+  constructor (props) {
+    super(props)
+    this.state = {
+      newTodo: 'test',
+      todoList: [
+        {id: 1, title: '第一个待办'},
+        {id: 2, title: '第二个待办'}
+      ]
+    }
+  }
+  render () {
+    let todos = this.state.todoList.map((item, index) => {
+      return ( // 为什么这里要加个括号？这是动手题3 🐸
+        <li>
+          <TodoItem todo={item} />
+        </li>
+      )
+    })
+
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <div className='App'>
+        <h1>我的待办</h1>
+        <div className='inputWrapper'>
+          <TodoInput content={this.state.newTodo} />
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ol>
+          {todos}
+        </ol>
       </div>
-    );
+    )
   }
 }
 
-
-export default App;
+export default App

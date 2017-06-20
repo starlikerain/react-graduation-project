@@ -5,13 +5,13 @@ import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 import Welcome from './Welcome' // Welcome component
 
-ReactDOM.render(
-  <Welcome name="123"/>,
-  document.getElementById('root')
-)
+// ReactDOM.render(
+//   <Welcome name="123"/>,
+//   document.getElementById('root')
+// )
 
-// ReactDOM.render(<App />, document.getElementById('root'))
-// registerServiceWorker()
+ReactDOM.render(<App />, document.getElementById('root'))
+registerServiceWorker()
 
 // ReactDOM.render(
 //   <h1>Hi, World</h1>,
