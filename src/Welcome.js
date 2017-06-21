@@ -1,4 +1,7 @@
-import React from 'react'
+// 如果不import进来 下面哪里有react可以用啊  
+import React from 'react'  
+
+
 class Welcome extends React.Component {
   constructor (props) {
     super(props)
@@ -32,4 +35,5 @@ class Welcome extends React.Component {
   }
 }
 
+// 一个文件中 export default只能有一个
 export default Welcome

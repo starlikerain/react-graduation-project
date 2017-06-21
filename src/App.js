@@ -8,6 +8,9 @@ import TodoItem from './TodoItem'
 class App extends Component {
   constructor (props) {
     super(props)
+    // 这里为何要用newTodo来容纳 
+    // 因为 数据驱动，TodoInput的onChange的时候 进行setState
+    // 不放这state里面， 没法进入 shouldComponentUpdate
     this.state = {
       newTodo: '',
       todoList: []
