@@ -4,19 +4,20 @@ import './reset.css'
 import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
+import * as localStore from './localStore'
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     // 这里为何要用newTodo来容纳 
     // 因为 数据驱动，TodoInput的onChange的时候 进行setState
     // 不放这state里面， 没法进入 shouldComponentUpdate
     this.state = {
       newTodo: '',
-      todoList: []
+      todoList: localStore.load('todoList') || []
     }
   }
-  render () {
+  render() {
     let todos = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
@@ -39,21 +40,26 @@ class App extends Component {
       </div>
     )
   }
-  delete (event, todo) {
+  delete(event, todo) {
     todo.deleted = true
     this.setState(this.state)
+    localStore.save('todoList', this.state.todoList)
   }
-  toggle (e, todo) {
+  toggle(e, todo) {
+    // todo.status = todo.status === 'completed' ? '' : 'completed'
+    // this.setState(this.state)
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
+    localStore.save('todoList', this.state.todoList)
   }
-  changeTitle (event) {
+  changeTitle(event) {
     this.setState({
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
+    localStore.save('todoList', this.state.todoList)
   }
-  addTodo (event) {
+  addTodo(event) {
     this.state.todoList.push({
       id: idMaker(),
       title: event.target.value,
@@ -64,6 +70,7 @@ class App extends Component {
       newTodo: '',
       todoList: this.state.todoList
     })
+    localStore.save('todoList', this.state.todoList)
   }
 }
 
@@ -71,7 +78,7 @@ export default App
 
 let id = 0
 
-function idMaker () {
+function idMaker() {
   id += 1
   return id
 }
