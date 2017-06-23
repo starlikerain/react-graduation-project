@@ -4,7 +4,7 @@ import './reset.css'
 import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
-import * as localStore from './localStore'
+import * as  localStore from './localStore'
 
 class App extends Component {
   constructor(props) {
@@ -60,17 +60,21 @@ class App extends Component {
     localStore.save('todoList', this.state.todoList)
   }
   addTodo(event) {
-    this.state.todoList.push({
-      id: idMaker(),
-      title: event.target.value,
-      status: null,
-      deleted: false
-    })
-    this.setState({
-      newTodo: '',
-      todoList: this.state.todoList
-    })
-    localStore.save('todoList', this.state.todoList)
+    if (event.target.value != '') {
+      this.state.todoList.push({
+        id: idMaker(),
+        title: event.target.value,
+        status: null,
+        deleted: false
+      })
+      this.setState({
+        newTodo: '',
+        todoList: this.state.todoList
+      })
+      localStore.save('todoList', this.state.todoList)
+    } else {
+      alert('Stanley why you input nothing ?!')
+    }
   }
 }
 
