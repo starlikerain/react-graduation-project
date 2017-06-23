@@ -3,7 +3,6 @@
   /*内容居中*/  display: flex; justify-content: center; align-items: center;
 }
 .UserDialog{
-  border: 1px solid;
   border-radius: 4px;
   min-width: 20em;
   background: white;
