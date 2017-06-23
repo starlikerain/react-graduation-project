@@ -6,27 +6,8 @@ import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import * as  localStore from './localStore'
 
-// initializatioon leanCloud
-import AV from 'leancloud-storage'
-var APP_ID = 'h5GsWAlEvnIa3OTNJuWzgfaO-gzGzoHsz'
-var APP_KEY = 'JbcCMp7DHUT4f33UtYjtAh2M'
-AV.init({
-  appId: APP_ID,
-  appKey: APP_KEY
-})
-
-// test leanCloud functional
-var TestObject = AV.Object.extend('TestObject')
-var testObject = new TestObject()
-console.log(testObject);
-testObject.save({
-  words: JSON.stringify({a:'b'})
-}).then(function (object) {
-  alert('LeanCloud Rocks!')
-})
-
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     // 这里为何要用newTodo来容纳 
     // 因为 数据驱动，TodoInput的onChange的时候 进行setState
@@ -36,7 +17,7 @@ class App extends Component {
       todoList: localStore.load('todoList') || []
     }
   }
-  render() {
+  render () {
     let todos = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
@@ -59,26 +40,26 @@ class App extends Component {
       </div>
     )
   }
-  componentDidUpdate() {
+  componentDidUpdate () {
     localStore.save('todoList', this.state.todoList)
   }
-  delete(event, todo) {
+  delete (event, todo) {
     todo.deleted = true
     this.setState(this.state)
   }
-  toggle(e, todo) {
+  toggle (e, todo) {
     // todo.status = todo.status === 'completed' ? '' : 'completed'
     // this.setState(this.state)
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
   }
-  changeTitle(event) {
+  changeTitle (event) {
     this.setState({
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
   }
-  addTodo(event) {
+  addTodo (event) {
     if (event.target.value !== '') {
       this.state.todoList.push({
         id: idMaker(),
@@ -100,7 +81,7 @@ export default App
 
 let id = 0
 
-function idMaker() {
+function idMaker () {
   id += 1
   return id
 }
