@@ -4,7 +4,7 @@ import './reset.css'
 import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
-import * as  localStore from './localStore'
+import UserDialog from './userDialog'
 
 class App extends Component {
   constructor (props) {
@@ -14,7 +14,7 @@ class App extends Component {
     // 不放这state里面， 没法进入 shouldComponentUpdate
     this.state = {
       newTodo: '',
-      todoList: localStore.load('todoList') || []
+      todoList: []
     }
   }
   render () {
@@ -37,19 +37,16 @@ class App extends Component {
         <ol>
           {todos}
         </ol>
+        <UserDialog />
       </div>
     )
   }
-  componentDidUpdate () {
-    localStore.save('todoList', this.state.todoList)
-  }
+  componentDidUpdate () {}
   delete (event, todo) {
     todo.deleted = true
     this.setState(this.state)
   }
   toggle (e, todo) {
-    // todo.status = todo.status === 'completed' ? '' : 'completed'
-    // this.setState(this.state)
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
   }
