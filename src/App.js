@@ -6,6 +6,25 @@ import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import * as  localStore from './localStore'
 
+// initializatioon leanCloud
+import AV from 'leancloud-storage'
+var APP_ID = 'h5GsWAlEvnIa3OTNJuWzgfaO-gzGzoHsz'
+var APP_KEY = 'JbcCMp7DHUT4f33UtYjtAh2M'
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+})
+
+// test leanCloud functional
+var TestObject = AV.Object.extend('TestObject')
+var testObject = new TestObject()
+console.log(testObject);
+testObject.save({
+  words: JSON.stringify({a:'b'})
+}).then(function (object) {
+  alert('LeanCloud Rocks!')
+})
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -60,7 +79,7 @@ class App extends Component {
     })
   }
   addTodo(event) {
-    if (event.target.value != '') {
+    if (event.target.value !== '') {
       this.state.todoList.push({
         id: idMaker(),
         title: event.target.value,
