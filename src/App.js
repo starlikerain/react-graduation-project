@@ -5,6 +5,7 @@ import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import UserDialog from './userDialog'
+import { getCurrentUser } from './leanCloud'
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class App extends Component {
     // 因为 数据驱动，TodoInput的onChange的时候 进行setState
     // 不放这state里面， 没法进入 shouldComponentUpdate
     this.state = {
-      user: {},
+      user: getCurrentUser() || {},
       newTodo: '',
       todoList: []
     }

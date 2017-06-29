@@ -36,3 +36,13 @@ function getUserFromAVUser(AVUser) {
     ...AVUser.attributes
   }
 }
+
+// 获取浏览器当前 已经登录的用户信息
+export function getCurrentUser() {
+  let user = AV.User.current()
+  if (user) {
+    return getUserFromAVUser(user)
+  } else {
+    return null
+  }
+}
