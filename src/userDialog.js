@@ -25,7 +25,9 @@ export default class UserDialog extends Component {
     e.preventDefault()
     let { username, password } = this.state.formData
     let success = (user) => {
-      console.log(user)
+      console.log('userDialog.js的signUp: ', user)
+      console.log('来自iserDialog.js的signUp函数回调success')
+      this.props.onSignUp.call(null, user)
     }
     let error = (error) => {
       console.log(error)

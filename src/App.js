@@ -7,17 +7,18 @@ import TodoItem from './TodoItem'
 import UserDialog from './userDialog'
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     // 这里为何要用newTodo来容纳 
     // 因为 数据驱动，TodoInput的onChange的时候 进行setState
     // 不放这state里面， 没法进入 shouldComponentUpdate
     this.state = {
+      user: {},
       newTodo: '',
       todoList: []
     }
   }
-  render () {
+  render() {
     let todos = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
@@ -30,33 +31,37 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <h1>我的待办</h1>
+        <h1>{this.state.user.username || '我'}的待办</h1>
         <div className='inputWrapper'>
           <TodoInput content={this.state.newTodo} onChange={this.changeTitle.bind(this)} onSubmit={this.addTodo.bind(this)} />
         </div>
         <ol>
           {todos}
         </ol>
-        <UserDialog />
+        <UserDialog onSignUp={this.onSignUp.bind(this)} />
       </div>
     )
   }
-  componentDidUpdate () {}
-  delete (event, todo) {
+  onSignUp(user) {
+    this.state.user = user
+    this.setState(this.state)
+  }
+  componentDidUpdate() { }
+  delete(event, todo) {
     todo.deleted = true
     this.setState(this.state)
   }
-  toggle (e, todo) {
+  toggle(e, todo) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
   }
-  changeTitle (event) {
+  changeTitle(event) {
     this.setState({
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
   }
-  addTodo (event) {
+  addTodo(event) {
     if (event.target.value !== '') {
       this.state.todoList.push({
         id: idMaker(),
@@ -78,7 +83,7 @@ export default App
 
 let id = 0
 
-function idMaker () {
+function idMaker() {
   id += 1
   return id
 }
