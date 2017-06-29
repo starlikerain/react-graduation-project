@@ -5,7 +5,7 @@ import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import UserDialog from './userDialog'
-import { getCurrentUser } from './leanCloud'
+import { getCurrentUser, signOut } from './leanCloud'
 
 class App extends Component {
   constructor(props) {
@@ -32,16 +32,40 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <h1>{this.state.user.username || '我'}的待办</h1>
+        <h1>
+          {this.state.user.username || '我'}的待办
+          {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
+        </h1>
         <div className='inputWrapper'>
           <TodoInput content={this.state.newTodo} onChange={this.changeTitle.bind(this)} onSubmit={this.addTodo.bind(this)} />
         </div>
         <ol>
           {todos}
         </ol>
-        {this.state.user.id ? null : <UserDialog onSignUp={this.onSignUp.bind(this)} />}
+        {
+          this.state.user.id ?
+            null
+            :
+            <
+              UserDialog
+              onSignUp={this.onSignUp.bind(this)}
+              onSignIn={this.onSignIn.bind(this)}
+            />
+        }
       </div>
     )
+  }
+  signOut() {
+    // 来自小组件UserDialog的事件触发 本组件执行setState 触发rerender
+    signOut()
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = {}
+    this.setState(stateCopy)
+  }
+  onSignIn(user) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = user
+    this.setState(stateCopy)
   }
   onSignUp(user) {
     // this.state.user = user // 最好不要直接设置 state，因为不会触发rerernder啊啊啊啊啊
