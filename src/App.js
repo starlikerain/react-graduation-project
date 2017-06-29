@@ -43,8 +43,12 @@ class App extends Component {
     )
   }
   onSignUp(user) {
-    this.state.user = user
-    this.setState(this.state)
+    // this.state.user = user // 最好不要直接设置 state，因为不会触发rerernder啊啊啊啊啊
+    // this.setState(this.state)
+
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = user
+    this.setState(stateCopy)
   }
   componentDidUpdate() { }
   delete(event, todo) {
