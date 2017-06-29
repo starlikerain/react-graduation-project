@@ -48,8 +48,8 @@ class App extends Component {
             :
             <
               UserDialog
-              onSignUp={this.onSignUp.bind(this)}
-              onSignIn={this.onSignIn.bind(this)}
+              onSignUp={this.onSignUpOrSignIn.bind(this)}
+              onSignIn={this.onSignUpOrSignIn.bind(this)}
             />
         }
       </div>
@@ -62,12 +62,7 @@ class App extends Component {
     stateCopy.user = {}
     this.setState(stateCopy)
   }
-  onSignIn(user) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.user = user
-    this.setState(stateCopy)
-  }
-  onSignUp(user) {
+  onSignUpOrSignIn(user) {
     // this.state.user = user // 最好不要直接设置 state，因为不会触发rerernder啊啊啊啊啊
     // this.setState(this.state)
 
