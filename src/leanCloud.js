@@ -63,3 +63,17 @@ export function signIn(username, password, successFn, errorFn) {
     errorFn.call(null, error)
   })
 }
+
+// 通过邮箱重置密码的
+export function sendPasswordResetEmail(email, successFn, errorFn) {
+  AV.User.requestPasswordReset(email).then(
+      function (success) {
+        console.log('通过邮箱重置密码的success!!!')
+        successFn.call()
+      },
+      function (error) {
+        console.log('通过邮箱重置密码的error!!!')
+        console.dir(error)
+      }
+  )
+}

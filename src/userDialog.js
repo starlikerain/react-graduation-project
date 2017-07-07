@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './UserDialog.css'
-import {signUp, signIn} from './leanCloud'
+import {signUp, signIn, sendPasswordResetEmail} from './leanCloud'
 
 export default class UserDialog extends Component {
   constructor(props) {
@@ -70,11 +70,6 @@ export default class UserDialog extends Component {
     signIn(username, password, success, error)
   }
 
-  changeFormData(key, e) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))  // 用 JSON 深拷贝
-    stateCopy.formData[key] = e.target.value
-    this.setState(stateCopy)
-  }
 
   // changeUserName 和 changePassword 的逻辑都在这里
   changeFormData(key, e) {
@@ -178,6 +173,7 @@ export default class UserDialog extends Component {
           </form>
         </div>
     )
+
     return (
         <div className='UserDialog-Wrapper'>
           <div className='UserDialog'>
@@ -196,7 +192,9 @@ export default class UserDialog extends Component {
     this.setState(stateCopy)
   }
 
-  resetPassword() {
-
+  resetPassword(e) {
+    e.preventDefault()
+    // form leanCloud.js 的 export function
+    sendPasswordResetEmail(this.state.formData.email)
   }
 }
