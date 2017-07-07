@@ -73,7 +73,7 @@ export function sendPasswordResetEmail(email, successFn, errorFn) {
       },
       function (error) {
         console.log('通过邮箱重置密码的error!!!')
-        console.dir(error)
+        errorFn.call(null, error)
       }
   )
 }

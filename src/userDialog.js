@@ -78,6 +78,26 @@ export default class UserDialog extends Component {
     this.setState(stateCopy)
   }
 
+  // 返回登录
+  returnToSignIn() {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.selectedTab = 'signInOrSignUp'
+    this.setState(stateCopy)
+  }
+
+  // setState ，selectedTab 字段为 forgotPassword
+  showForgotPassword() {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.selectedTab = 'forgotPassword'
+    this.setState(stateCopy)
+  }
+
+  resetPassword(e) {
+    e.preventDefault()
+    // form leanCloud.js 的 export function
+    sendPasswordResetEmail(this.state.formData.email)
+  }
+
   render() {
     let signUpForm = (
         <form className='signUp' onSubmit={this.signUp.bind(this)}>
@@ -169,6 +189,7 @@ export default class UserDialog extends Component {
             </div>
             <div className="row actions">
               <button type="submit">发送重置邮件</button>
+              <a href="#" onClick={this.returnToSignIn.bind(this)}>返回登录</a>
             </div>
           </form>
         </div>
@@ -183,18 +204,5 @@ export default class UserDialog extends Component {
           </div>
         </div>
     )
-  }
-
-  // setState ，selectedTab 字段为 forgotPassword
-  showForgotPassword() {
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.selectedTab = 'forgotPassword'
-    this.setState(stateCopy)
-  }
-
-  resetPassword(e) {
-    e.preventDefault()
-    // form leanCloud.js 的 export function
-    sendPasswordResetEmail(this.state.formData.email)
   }
 }
