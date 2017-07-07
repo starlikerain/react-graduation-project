@@ -12,11 +12,13 @@
     box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.35);
 }
 
-.UserDialog > nav:first-child { padding: 1em; margin-left: -2em; }
+.UserDialog .signInOrSignUp > nav:first-child { padding: 1em; margin-left: -2em; }
 
-.UserDialog > nav:first-child label { margin-left: 2em; cursor: pointer; }
+.UserDialog .signInOrSignUp > nav:first-child label { margin-left: 2em; cursor: pointer; }
 
-.UserDialog > .panes { padding: 0 1em 1em; }
+.UserDialog .signInOrSignUp > .panes { padding: 0 1em 1em; }
+
+.UserDialog .forgotPassword > h3 { }
 
 .UserDialog form > .row { display: flex; padding: .3em 0; }
 
