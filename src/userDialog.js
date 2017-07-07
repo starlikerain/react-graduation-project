@@ -8,6 +8,7 @@ export default class UserDialog extends Component {
     this.state = {
       selected: 'signUp',
       formData: {
+        email: '',
         username: '',
         password: ''
       }
@@ -25,7 +26,7 @@ export default class UserDialog extends Component {
    **/
   signUp(e) {
     e.preventDefault()
-    let {username, password} = this.state.formData
+    let {email, username, password} = this.state.formData
     let success = (user) => {
       console.log('userDialog.js的signUp: ', user)
       console.log('来自iserDialog.js的signUp函数回调success')
@@ -42,7 +43,7 @@ export default class UserDialog extends Component {
       }
     }
     // import { signUp } from './leanCloud'
-    signUp(username, password, success, error)
+    signUp(email, username, password, success, error)
   }
 
   signIn(e) {
@@ -90,6 +91,11 @@ export default class UserDialog extends Component {
             {/* bind 不仅可以绑定 this，还可以绑定第一个参数 */}
           </div>
           <div className='row'>
+            <label>邮箱</label>
+            <input type="text" value={this.state.formData.email}
+                   onChange={this.changeFormData.bind(this, 'email')}/>
+          </div>
+          <div className="row">
             <label>
               密码
             </label>
