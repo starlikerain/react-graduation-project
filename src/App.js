@@ -91,9 +91,16 @@ class App extends Component {
     })
   }
 
+  // 在是否完成的状态之间切换
   toggle (e, todo) {
+    let oldStatus = todo.status
     todo.status = todo.status === 'completed' ? '' : 'completed'
-    this.setState(this.state)
+    TodoModel.update(todo, () => {
+      this.setState(this.state)
+    }, (error) => {
+      todo.status = oldStatus
+      this.setState(this.state)
+    })
   }
 
   changeTitle (event) {
@@ -107,7 +114,7 @@ class App extends Component {
   addTodo (event) {
     let newTodo = {
       title: event.target.value,
-      status: null,
+      status: '',
       deleted: false
     }
 
