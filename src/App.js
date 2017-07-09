@@ -19,7 +19,9 @@ class App extends Component {
       todoList: []
     }
   }
+
   render () {
+    // 过滤遍历渲染DOM
     let todos = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
@@ -41,6 +43,7 @@ class App extends Component {
         <ol>
           {todos}
         </ol>
+        {/*注册登录弹框区*/}
         {this.state.user.id ?
            null
            :
@@ -48,6 +51,7 @@ class App extends Component {
       </div>
     )
   }
+
   signOut () {
     // 来自小组件UserDialog的事件触发 本组件执行setState 触发rerender
     signOut()
@@ -55,6 +59,7 @@ class App extends Component {
     stateCopy.user = {}
     this.setState(stateCopy)
   }
+
   onSignUpOrSignIn (user) {
     // this.state.user = user // 最好不要直接设置 state，因为不会触发rerernder啊啊啊啊啊
     // this.setState(this.state)
@@ -63,21 +68,31 @@ class App extends Component {
     stateCopy.user = user
     this.setState(stateCopy)
   }
+
   componentDidUpdate () {}
+
+  // 每条todolist的删除按钮
   delete (event, todo) {
+    console.log('event:', event)
+    console.log('todo:', todo)
+
     todo.deleted = true
     this.setState(this.state)
   }
+
   toggle (e, todo) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
   }
+
   changeTitle (event) {
     this.setState({
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
   }
+
+  // 主要是这里更改了TodoList
   addTodo (event) {
     if (event.target.value !== '') {
       this.state.todoList.push({

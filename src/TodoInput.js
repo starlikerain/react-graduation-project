@@ -1,21 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './TodoInput.css'
 
-export default class TodoInput extends Component {
-  render() {
-    return <input
-      className='TodoInput'
-      type='text'
-      value={this.props.content}
-      onChange={this.changeTitle.bind(this)}
-      onKeyPress={this.submit.bind(this)} />
-  }
-  submit(e) {
-    if (e.key === 'Enter') {
-      this.props.onSubmit(e)
+function submit (props, e) {
+  if (e.key === 'Enter') {
+    // props.onSubmit(e)
+    if(e.target.value.trim() !== ''){
+      props.onSubmit(e)
+    }else {
+      alert('不是吧欧巴~你什么都不敢就要上哦！')
     }
   }
-  changeTitle(e) {
-    this.props.onChange(e)
-  }
+}
+function changeTitle (props, e) {
+  props.onChange(e)
+}
+
+// 搞不清楚 bind 用法的同学，请看完 MDN
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+// 尤其是示例要看懂
+
+export default function (props) {
+  return <input
+           type='text'
+           value={props.content}
+           className='TodoInput'
+           onChange={changeTitle.bind(null, props)}
+           onKeyPress={submit.bind(null, props)} />
 }
