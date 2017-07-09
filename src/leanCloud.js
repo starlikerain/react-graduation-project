@@ -4,10 +4,7 @@ import AV from 'leancloud-storage'
 var APP_ID = 'h5GsWAlEvnIa3OTNJuWzgfaO-gzGzoHsz'
 var APP_KEY = 'JbcCMp7DHUT4f33UtYjtAh2M'
 
-AV.init({
-  appId: APP_ID,
-  appKey: APP_KEY
-})
+AV.init({appId: APP_ID, appKey: APP_KEY})
 
 export default AV
 
@@ -22,12 +19,14 @@ export function signUp(email, username, password, successFn, errorFn) {
   // 设置邮箱（这个是leancloud的api）
   user.setEmail(email)
 
-  user.signUp().then(function (loginedUser) {
-    let user = getUserFromAVUser(loginedUser)
-    successFn.call(null, user)
-  }, function (error) {
-    errorFn.call(null, error)
-  })
+  user
+    .signUp()
+    .then(function (loginedUser) {
+      let user = getUserFromAVUser(loginedUser)
+      successFn.call(null, user)
+    }, function (error) {
+      errorFn.call(null, error)
+    })
   return undefined
 }
 
@@ -41,7 +40,9 @@ function getUserFromAVUser(AVUser) {
 
 // 获取浏览器当前 已经登录的用户信息
 export function getCurrentUser() {
-  let user = AV.User.current()
+  let user = AV
+    .User
+    .current()
   if (user) {
     return getUserFromAVUser(user)
   } else {
@@ -51,29 +52,63 @@ export function getCurrentUser() {
 
 // 给App.js用的 登出逻辑
 export function signOut() {
-  AV.User.logOut()
+  AV
+    .User
+    .logOut()
   return undefined
 }
 
 export function signIn(username, password, successFn, errorFn) {
-  AV.User.logIn(username, password).then(function (loginedUser) {
-    let user = getUserFromAVUser(loginedUser)
-    successFn.call(null, user)
-  }, function (error) {
-    errorFn.call(null, error)
-  })
+  AV
+    .User
+    .logIn(username, password)
+    .then(function (loginedUser) {
+      let user = getUserFromAVUser(loginedUser)
+      successFn.call(null, user)
+    }, function (error) {
+      errorFn.call(null, error)
+    })
 }
 
 // 通过邮箱重置密码的
 export function sendPasswordResetEmail(email, successFn, errorFn) {
-  AV.User.requestPasswordReset(email).then(
-      function (success) {
-        console.log('通过邮箱重置密码的success!!!')
-        successFn.call()
-      },
-      function (error) {
-        console.log('通过邮箱重置密码的error!!!')
-        errorFn.call(null, error)
-      }
-  )
+  AV
+    .User
+    .requestPasswordReset(email)
+    .then(function (success) {
+      console.log('通过邮箱重置密码的success!!!')
+      successFn.call()
+    }, function (error) {
+      console.log('通过邮箱重置密码的error!!!')
+      errorFn.call(null, error)
+    })
+}
+
+/* 所有跟 Todo 相关的 LeanCloud 操作都放到这里
+ * 会在leanCloud里面的Todo这个类里面添加字段
+**/
+export const TodoModel = {
+  create({
+    status,
+    title,
+    deleted
+  }, successFn, errorFn) {
+    let Todo = AV
+      .Object
+      .extend('Todo')
+    let todo = new Todo()
+    todo.set('title', title)
+    todo.set('status', status)
+    todo.set('deleted', deleted)
+    todo
+      .save()
+      .then(function (response) {
+        successFn.call(null, response.id)
+      }, function (error) {
+        errorFn && errorFn.call(null, error)
+      });
+
+  },
+  update() {},
+  destroy() {}
 }

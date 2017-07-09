@@ -5,7 +5,7 @@ import './App.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import UserDialog from './userDialog'
-import { getCurrentUser, signOut } from './leanCloud'
+import { getCurrentUser, signOut, TodoModel } from './leanCloud'
 
 class App extends Component {
   constructor (props) {
@@ -94,20 +94,38 @@ class App extends Component {
 
   // 主要是这里更改了TodoList
   addTodo (event) {
-    if (event.target.value !== '') {
-      this.state.todoList.push({
-        id: idMaker(),
-        title: event.target.value,
-        status: null,
-        deleted: false
-      })
-      this.setState({
-        newTodo: '',
-        todoList: this.state.todoList
-      })
-    } else {
-      alert('Stanley why you input nothing ?!')
+    let newTodo = {
+      title: event.target.value,
+      status: null,
+      deleted: false
     }
+
+    TodoModel.create(newTodo,
+      (id) => {
+        newTodo.id = id
+        this.state.todoList.push(newTodo)
+        this.setState({
+          newTodo: '',
+          todoList: this.state.todoList
+        })
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+
+  // if (event.target.value !== '') {
+  //   this.state.todoList.push({
+  //     id: idMaker(),
+  //     title: event.target.value,
+  //     status: null,
+  //     deleted: false
+  //   })
+  //   this.setState({
+  //     newTodo: '',
+  //     todoList: this.state.todoList
+  //   })
+  // }
   }
 }
 
