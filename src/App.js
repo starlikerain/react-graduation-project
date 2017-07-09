@@ -85,8 +85,10 @@ class App extends Component {
     console.log('event:', event)
     console.log('todo:', todo)
 
-    todo.deleted = true
-    this.setState(this.state)
+    TodoModel.destroy(todo.id, () => {
+      todo.deleted = true
+      this.setState(this.state)
+    })
   }
 
   toggle (e, todo) {
