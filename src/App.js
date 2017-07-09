@@ -18,6 +18,15 @@ class App extends Component {
       newTodo: '',
       todoList: []
     }
+    let user = getCurrentUser()
+    if (user) {
+      // 通过用户查找todolist
+      TodoModel.getByUser(user, (todos) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state))
+        stateCopy.todoList = todos
+        this.setState(stateCopy)
+      })
+    }
   }
 
   render () {
