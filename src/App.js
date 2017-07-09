@@ -66,6 +66,9 @@ class App extends Component {
     signOut()
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.user = {}
+    // 登出之后，清除列表
+    stateCopy.newTodo = ''
+    stateCopy.todoList = []
     this.setState(stateCopy)
   }
 
@@ -149,9 +152,9 @@ class App extends Component {
 
 export default App
 
-let id = 0
+// let id = 0
 
-function idMaker () {
-  id += 1
-  return id
-}
+// function idMaker () {
+//   id += 1
+//   return id
+// }
